@@ -18,10 +18,10 @@ if [ -f /version.txt ]; then
 
   # update nameservers
   if [ -z $DNS_HOST ]; then
+    echo "skipping nameservers"
+  else
     echo "updating nameservers"
     echo nameserver `host $DNS_HOST | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"` >> /etc/resolv.conf
-  else
-    echo "skipping nameservers"
   fi
 
 	if [ ! -f /config/etc/as.conf ]; then
