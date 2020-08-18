@@ -21,7 +21,7 @@ if [ -f /version.txt ]; then
     echo "skipping nameservers"
   else
     echo "updating nameservers"
-    { echo nameserver `host $DNS_HOST | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"`; cat /etc/resolv.conf; } < temp
+    { echo nameserver `host $DNS_HOST | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"`; cat /etc/resolv.conf; } > temp
     cat temp > /etc/resolv.conf
     rm temp
   fi
