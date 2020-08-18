@@ -11,8 +11,11 @@ fi
 shopt -s extglob
 
 # update nameservers
-if [[ -z $DNS_HOST ]]; then
+if [ -z ${var+$DNS_HOST} ]; then
+  echo "updating nameservers"
   echo nameserver `host $DNS_HOST | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"` >> /etc/resolv.conf
+else
+  echo "skipping nameservers"
 fi
 
 # install or update openvpn-as
