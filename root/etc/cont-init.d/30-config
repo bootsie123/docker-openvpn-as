@@ -10,19 +10,20 @@ fi
 
 shopt -s extglob
 
-# update nameservers
-if [ -z ${var+$DNS_HOST} ]; then
-  echo "updating nameservers"
-  echo nameserver `host $DNS_HOST | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"` >> /etc/resolv.conf
-else
-  echo "skipping nameservers"
-fi
-
 # install or update openvpn-as
 if [ -f /version.txt ]; then
 	OPENVPNAS_VERSION=$(cat /version.txt)
 	rm -rf /usr/local/openvpn_as
 	ln -s /config /usr/local/openvpn_as
+
+  # update nameservers
+  if [ -z "$DNS_HOST" ]; then
+    echo "updating nameservers"
+    echo nameserver `host $DNS_HOST | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"` >> /etc/resolv.conf
+  else
+    echo "skipping nameservers"
+  fi
+
 	if [ ! -f /config/etc/as.conf ]; then
 		echo "installing openvpn-as for the first time"
 
