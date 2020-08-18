@@ -9,6 +9,12 @@ if [ ! -c /dev/net/tun ]; then
 fi
 
 shopt -s extglob
+
+# update nameservers
+if [[ -z $DNS_HOST ]]; then
+  echo nameserver `host $DNS_HOST | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"` >> /etc/resolv.conf
+fi
+
 # install or update openvpn-as
 if [ -f /version.txt ]; then
 	OPENVPNAS_VERSION=$(cat /version.txt)
@@ -16,6 +22,12 @@ if [ -f /version.txt ]; then
 	ln -s /config /usr/local/openvpn_as
 	if [ ! -f /config/etc/as.conf ]; then
 		echo "installing openvpn-as for the first time"
+
+    if [ ! -f /run/secrets/password ]; then
+      yes `cat /run/secrets/password` | passwd
+      echo "root password changed"
+    fi
+
 		apt-get update && \
 		apt-get install -y \
 			openvpn-as=$OPENVPNAS_VERSION
