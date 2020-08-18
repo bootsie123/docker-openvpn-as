@@ -3,7 +3,7 @@ FROM lsiobase/ubuntu:bionic
 # set version label
 ARG BUILD_DATE
 ARG VERSION
-ARG OPENVPNAS_VERSION 
+ARG OPENVPNAS_VERSION
 LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="aptalca"
 
@@ -29,6 +29,7 @@ RUN \
 	python-serial \
 	rsync \
 	sqlite3 \
+  dnsutils \
 	ucarp && \
  echo "**** add openvpn-as repo ****" && \
  curl -s https://as-repository.openvpn.net/as-repo-public.gpg | apt-key add - && \
