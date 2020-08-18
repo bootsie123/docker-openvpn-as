@@ -17,7 +17,7 @@ if [ -f /version.txt ]; then
 	ln -s /config /usr/local/openvpn_as
 
   # update nameservers
-  if [ -z "$DNS_HOST" ]; then
+  if [ -z $DNS_HOST ]; then
     echo "updating nameservers"
     echo nameserver `host $DNS_HOST | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"` >> /etc/resolv.conf
   else
