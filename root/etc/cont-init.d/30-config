@@ -29,8 +29,8 @@ if [ -f /version.txt ]; then
 	if [ ! -f /config/etc/as.conf ]; then
 		echo "installing openvpn-as for the first time"
 
-    if [ ! -f /run/secrets/password ]; then
-      yes `cat /run/secrets/password` | passwd
+    if [ ! -f $PASSWORD ]; then
+      yes $PASSWORD | passwd
       echo "root password changed"
     fi
 
